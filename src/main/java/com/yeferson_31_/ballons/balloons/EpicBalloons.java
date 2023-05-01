@@ -49,8 +49,8 @@ public class EpicBalloons {
             this.slime = (Slime) balloon.getClass().getMethod("getSlime").invoke(balloon);              //Get the slime from the NMSBalloons class
             this.armorStand = (ArmorStand) balloon.getClass().getMethod("getContents").invoke(balloon); //Get the armorstand from the NMSBalloons class
             this.player.sendMessage(LangConfig.Msg.MessagesSpawn.toPrefix());
-        }catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e){
-            e.printStackTrace();
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e){
+            // e.printStackTrace();
         }
     }
 
@@ -64,6 +64,10 @@ public class EpicBalloons {
     }
 
     public void setItem(ItemStack item){
+        this.item = item;
         this.armorStand.setHelmet(item);
+    }
+    public ItemStack getItem(){
+        return item;
     }
 }

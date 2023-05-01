@@ -23,7 +23,7 @@ public class LangConfig {
     private YamlConfiguration locationFileData;
 
     public LangConfig(){
-        this.locationFile = new File(Ballons.instance.getDataFolder(), "lang.yml");
+        this.locationFile = new File(Ballons.instance.getDataFolder(), "config.yml");
         this.locationFileData = new YamlConfiguration();
 
         this.reloadData();
@@ -68,7 +68,7 @@ public class LangConfig {
             try {
                 Path path = Paths.get(Ballons.instance.getDataFolder() + File.separator + "old_lang_"+ UUID.randomUUID().toString().substring(0, 4) + ".yml");
                 Files.copy(this.locationFile.toPath(), path);
-            }catch (IOException e2){}
+            } catch (IOException e2){}
         }
     }
 
@@ -105,7 +105,14 @@ public class LangConfig {
         InventoryItemFireCharge("inventory.items.firecharge", "&cFireCharge"),
         InventoryItemCocoaPod("inventory.items.cocoapod", "&6Cocoa Pod"),
         InventoryItemNetherPortal("inventory.items.netherportal", "&5Nether Portal"),
-        InventoryItemRemoveBalloon("inventory.items.removeballoon", "&cRemove your balloon");
+        InventoryItemRemoveBalloon("inventory.items.removeballoon", "&cRemove your balloon"),
+        DatabaseConfigEnable("database.enable", "true"),
+        DatabaseConfigHost("database.host", "localhost"),
+        DatabaseConfigPort("database.port", "3306"),
+        DatabaseConfigUsername("database.username", "root"),
+        DatabaseConfigPassword("database.password", ""),
+        DatabaseConfigName("database.database", "balloons");
+
 
         private String path;
         private String value;

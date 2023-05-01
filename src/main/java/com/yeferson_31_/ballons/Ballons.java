@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Created by Feeps on 16/08/2017
  */
 
-public class Ballons extends JavaPlugin{
+public class Ballons extends JavaPlugin {
     public static Ballons instance;
     public String version;
 
