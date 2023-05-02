@@ -21,6 +21,46 @@ public class DbUtils {
         return connection;
     }
 
+    public static Boolean setupDatabaseTables() {
+        Boolean result = false;
+        try {
+            String sql = "CREATE TABLE player_balloons (player_uuid varchar(255) NOT NULL, balloon_type varchar(255) NOT NULL)";
+            PreparedStatement checkStatement = getConnection().prepareStatement(sql);
+            checkStatement.executeUpdate();
+
+            result = true;
+            close();
+            //System.out.println("Database created successfully.");
+        } catch (SQLException e) {
+            // e.printStackTrace();
+            System.out.println("An error ocurred while creating the database, please check database configuration in config.yml, exception:\n" + e.getMessage());
+            close();
+        }
+        return result;
+    }
+    public static Boolean setupDatabase() {
+        Boolean result = false;
+        try {
+            connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port , username, password);
+            String db_name = LangConfig.Msg.DatabaseConfigName.toString();
+            String sql = "CREATE DATABASE IF NOT EXISTS " + (db_name.equals("") ? db_name : "balloons");
+            PreparedStatement checkStatement = connection.prepareStatement(sql);
+            int st = checkStatement.executeUpdate();
+            close();
+            if (st == 1) {
+                result = setupDatabaseTables();
+            } else {
+                result = true;
+            }
+            //System.out.println("Database created successfully.");
+        } catch (SQLException e) {
+            // e.printStackTrace();
+            System.out.println("An error ocurred while creating the database, please check database configuration in config.yml, exception:\n" + e.getMessage());
+            close();
+        }
+        return result;
+    }
+
     public static void close() {
         try {
             if (connection != null) {
@@ -33,8 +73,9 @@ public class DbUtils {
 
     // method to set the balloon type for a player
     public static void setPlayerBalloon(String playerUUID, String balloonType) {
+        getConnection();
         try {
-            PreparedStatement checkStatement = getConnection().prepareStatement("SELECT * FROM player_balloons WHERE player_uuid = ?");
+            PreparedStatement checkStatement = connection.prepareStatement("SELECT * FROM player_balloons WHERE player_uuid = ?");
             checkStatement.setString(1, playerUUID);
             ResultSet resultSet = checkStatement.executeQuery();
 
@@ -54,24 +95,28 @@ public class DbUtils {
             close();
         } catch (SQLException e) {
             // e.printStackTrace();
+            close();
         }
     }
     public static String deletePlayerBalloon(String playerUUID) {
+        getConnection();
         try {
-            PreparedStatement statement = getConnection().prepareStatement("DELETE FROM player_balloons WHERE player_uuid = ?");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM player_balloons WHERE player_uuid = ?");
             statement.setString(1, playerUUID);
             statement.executeUpdate();
             close();
         } catch (SQLException e) {
             // e.printStackTrace();
+            close();
         }
         return null;
     }
 
     // method to get the balloon type for a player
     public static String getPlayerBalloon(String playerUUID) {
+        getConnection();
         try {
-            PreparedStatement statement = getConnection().prepareStatement("SELECT balloon_type FROM player_balloons WHERE player_uuid = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT balloon_type FROM player_balloons WHERE player_uuid = ?");
             statement.setString(1, playerUUID);
             ResultSet result = statement.executeQuery();
             if (result.next()) {
@@ -80,6 +125,7 @@ public class DbUtils {
             close();
         } catch (SQLException e) {
             // e.printStackTrace();
+            close();
         }
         return null;
     }

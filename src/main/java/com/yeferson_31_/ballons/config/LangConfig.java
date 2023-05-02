@@ -131,6 +131,10 @@ public class LangConfig {
             return this.value;
         }
 
+        public void setValue(String newValue){
+            this.value = newValue;
+        }
+
         public static void setFile(YamlConfiguration config) {
             LANG = config;
         }

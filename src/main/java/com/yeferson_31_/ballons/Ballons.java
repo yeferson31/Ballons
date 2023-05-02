@@ -4,6 +4,7 @@ import com.yeferson_31_.ballons.balloons.EpicBalloons;
 import com.yeferson_31_.ballons.commands.EpicCommands;
 import com.yeferson_31_.ballons.config.LangConfig;
 import com.yeferson_31_.ballons.events.EpicEvents;
+import com.yeferson_31_.ballons.utils.DbUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -24,7 +25,17 @@ public class Ballons extends JavaPlugin {
 
         this.getCommand("balloons").setExecutor(new EpicCommands());
         Bukkit.getPluginManager().registerEvents(new EpicEvents(), this);
+
+        if (LangConfig.Msg.DatabaseConfigEnable.toString().equals("true")) {
+            if(DbUtils.setupDatabase()) {
+                getLogger().info("Database created successfully.");
+            } else {
+                getLogger().warning("Error creating database. is mysql server online? database disabled to prevent issues.");
+                LangConfig.Msg.DatabaseConfigEnable.setValue("false");
+            }
+        }
     }
+
 
     @Override
     public void onDisable() {
