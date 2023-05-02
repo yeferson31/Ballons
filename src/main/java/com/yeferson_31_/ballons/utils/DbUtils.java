@@ -42,8 +42,7 @@ public class DbUtils {
         Boolean result = false;
         try {
             connection = DriverManager.getConnection("jdbc:mysql://" + host + ":" + port , username, password);
-            String db_name = LangConfig.Msg.DatabaseConfigName.toString();
-            String sql = "CREATE DATABASE IF NOT EXISTS " + (db_name.equals("") ? db_name : "balloons");
+            String sql = "CREATE DATABASE IF NOT EXISTS " + (!database.equals("") ? database : "balloons");
             PreparedStatement checkStatement = connection.prepareStatement(sql);
             int st = checkStatement.executeUpdate();
             close();
