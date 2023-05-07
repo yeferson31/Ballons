@@ -106,7 +106,7 @@ public class LangConfig {
         InventoryItemCocoaPod("inventory.items.cocoapod", "&6Cocoa Pod"),
         InventoryItemNetherPortal("inventory.items.netherportal", "&5Nether Portal"),
         InventoryItemRemoveBalloon("inventory.items.removeballoon", "&cRemove your balloon"),
-        DatabaseConfigEnable("database.enable", "true"),
+        DatabaseConfigEnable("database.enable", "false"),
         DatabaseConfigHost("database.host", "localhost"),
         DatabaseConfigPort("database.port", "3306"),
         DatabaseConfigUsername("database.username", "root"),

@@ -24,11 +24,11 @@ public class DbUtils {
     public static Boolean setupDatabaseTables() {
         Boolean result = false;
         try {
-            String sql = "CREATE TABLE player_balloons (player_uuid varchar(255) NOT NULL, balloon_type varchar(255) NOT NULL)";
+            String sql = "CREATE TABLE IF NOT EXIST player_balloons (player_uuid varchar(255) NOT NULL, balloon_type varchar(255) NOT NULL)";
             PreparedStatement checkStatement = getConnection().prepareStatement(sql);
-            checkStatement.executeUpdate();
+            int st = checkStatement.executeUpdate();
 
-            result = true;
+            result = st == 1;
             close();
             //System.out.println("Database created successfully.");
         } catch (SQLException e) {

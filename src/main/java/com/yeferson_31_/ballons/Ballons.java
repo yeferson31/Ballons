@@ -28,10 +28,14 @@ public class Ballons extends JavaPlugin {
 
         if (LangConfig.Msg.DatabaseConfigEnable.toString().equals("true")) {
             if(DbUtils.setupDatabase()) {
-                getLogger().info("Database created successfully.");
+                getLogger().info("Connected to the database successfully.");
             } else {
                 getLogger().warning("Error creating database. is mysql server online? database disabled to prevent issues.");
                 LangConfig.Msg.DatabaseConfigEnable.setValue("false");
+            }
+
+            if (DbUtils.setupDatabaseTables()) {
+                getLogger().info("Database tables created successfully.");
             }
         }
     }
