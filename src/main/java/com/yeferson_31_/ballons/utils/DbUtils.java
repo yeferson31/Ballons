@@ -24,7 +24,7 @@ public class DbUtils {
     public static Boolean setupDatabaseTables() {
         Boolean result = false;
         try {
-            String sql = "CREATE TABLE IF NOT EXIST player_balloons (player_uuid varchar(255) NOT NULL, balloon_type varchar(255) NOT NULL)";
+            String sql = "CREATE TABLE IF NOT EXISTS player_balloons (player_uuid varchar(255) NOT NULL, balloon_type varchar(255) NOT NULL)";
             PreparedStatement checkStatement = getConnection().prepareStatement(sql);
             int st = checkStatement.executeUpdate();
 
